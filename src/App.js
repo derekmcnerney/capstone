@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -12,12 +12,20 @@ const App = () => {
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchProducts = async () => {
-    const { data } = await commerce.products.list();
+  // const fetchProducts = async () => {
+  //   const { data } = await commerce.products.list();
+    
 
-    setProducts(data);
-  };
+  //   setProducts(data);
+  // };
 
+  const fetchProducts = useCallback( 
+    async() => {
+       const { data } = await commerce.products.list();
+       setProducts(data);
+    },
+    [],
+  )
   const fetchCart = async () => {
     setCart(await commerce.cart.retrieve());
   };
@@ -67,7 +75,7 @@ const App = () => {
   useEffect(() => {
     fetchProducts();
     fetchCart();
-  }, []);
+  }, [fetchProducts]);
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 

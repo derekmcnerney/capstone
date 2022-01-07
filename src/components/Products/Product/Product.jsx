@@ -7,11 +7,13 @@ import useStyles from './styles';
 const Product = ({ product, onAddToCart }) => {
   const classes = useStyles();
 
+    console.log(product)
+
   const handleAddToCart = () => onAddToCart(product.id, 1);
 
   return (
     <Card className={classes.root}>
-      <CardMedia className={classes.media} image={product.media.source} title={product.name} />
+      <CardMedia className={classes.media} image={product.image.url} title={product.name} />
       <CardContent>
         <div className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
